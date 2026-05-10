@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: pricehuntbot
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python bot.py
+    envVars:
+      - key: BOT_TOKEN
+        sync: false          # você preenche no painel do Render
+      - key: DB_PATH
+        value: /tmp/pricehunt.db
+    # Plano free do Render hiberna após inatividade.
+    # O health-check em / evita isso durante o uptime pago.
+    healthCheckPath: /health

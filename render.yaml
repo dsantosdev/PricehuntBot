@@ -6,9 +6,13 @@ services:
     startCommand: python bot.py
     envVars:
       - key: BOT_TOKEN
-        sync: false          # você preenche no painel do Render
-      - key: DB_PATH
-        value: /tmp/pricehunt.db
-    # Plano free do Render hiberna após inatividade.
-    # O health-check em / evita isso durante o uptime pago.
+        sync: false           # você preenche no painel do Render
+      - key: DATABASE_URL
+        fromDatabase:
+          name: pricehuntbot-db
+          property: connectionString
     healthCheckPath: /health
+
+databases:
+  - name: pricehuntbot-db
+    plan: free
